@@ -1,3 +1,4 @@
+
 import { assets } from "../assets/assets";
 
 const Sidebar = () => {
@@ -39,6 +40,7 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
+      
     </>
   );
 };
