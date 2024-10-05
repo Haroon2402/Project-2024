@@ -44,7 +44,7 @@ const DisplayAlbum = () => {
         <p className="text-[15px] hidden sm:block">5 days ago</p>
         <p className="text-[15px] text-center">{item.duration}</p>
         </div>
-          /* next NavBar.jsx duration 1:28:32 */    
+          
       )}
     </>
   );
