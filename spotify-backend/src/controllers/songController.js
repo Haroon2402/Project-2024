@@ -50,8 +50,9 @@ const listSong = async (req, res) => {
 const removeSong = async (req, res) => {
     try {
         
-        const {id} = req.body
-        await songModel.findByIdAndDelete(id)
+        const {id} = req.params
+        const {body} = req
+        await songModel.findByIdAndDelete(id, body)
         res.status(202).send({success: true, message: "Song Removed"})
 
     } catch (error) {
