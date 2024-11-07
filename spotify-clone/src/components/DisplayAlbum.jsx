@@ -1,15 +1,26 @@
 import { useParams } from "react-router-dom";
 import Navbar from "./Navbar";
-import { albumsData, assets, songsData } from "../assets/assets";
-import { useContext } from "react";
+import {  assets} from "../assets/assets";
+import { useContext, useEffect, useState } from "react";
 import { PlayerContext } from "../context/PlayerContext";
 
-const DisplayAlbum = () => {
-  const { id } = useParams();
-  const albumData = albumsData[id];
-  const {playWithId} = useContext(PlayerContext)
+const DisplayAlbum = ({album}) => {
 
-  return (
+  
+  const { id } = useParams();
+ // const albumData = albumsData[id]; /-----used when viewing with only frontend
+ const [albumData, setAlbumData] = useState("") //initialized after backend and db for storing the data from contextAPI
+  const {playWithId, albumsData, songsData} = useContext(PlayerContext)
+
+  useEffect(()=>{                     //This mounting has been done after db and backend to check id of db and id of params are same
+    albumsData.map((item)=>{     
+      if(item._id === id){
+        setAlbumData(item)
+      }
+    })
+  },[])
+
+  return albumData ? (
     <>
       <Navbar />
       <div className="mt-10 flex gap-8 flex-col md:flex-row md:items-end">
@@ -35,9 +46,11 @@ const DisplayAlbum = () => {
         <img className="m-auto w-4" src={assets.clock_icon} />
       </div>
       <hr />
-      {songsData.map((item,index)=>
+
+      {/*The below filter is done after  db and backend process. This will check the  Album names are same.*/}
+      {songsData.filter((item)=> item.album === album.name).map((item,index)=>
        
-        <div key={index} onClick={()=>playWithId(item.id)} className="grid grid-cols-3 sm:grid-cols-4 gap-2 p-2 items-center text-[#a7a7a7] hover:bg-[#ffffff2b] cursor-pointer">
+        <div key={index} onClick={()=>playWithId(item._id)} className="grid grid-cols-3 sm:grid-cols-4 gap-2 p-2 items-center text-[#a7a7a7] hover:bg-[#ffffff2b] cursor-pointer">
         <p className="text-white">
           <b className="mr-4 text-[#a7a7a7]">{index+1}</b>
           <img className="inline w-10 mr-5" src={item.image} alt="" />
@@ -50,7 +63,7 @@ const DisplayAlbum = () => {
           
       )}
     </>
-  );
+  ) : null;
 };
 
 export default DisplayAlbum;

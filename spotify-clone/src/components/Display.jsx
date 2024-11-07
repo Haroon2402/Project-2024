@@ -1,16 +1,21 @@
 import { Route, Routes, useLocation } from "react-router-dom"
 import DisplayHome from "./DisplayHome"
 import DisplayAlbum from "./DisplayAlbum"
-import { useEffect, useRef } from "react"
-import { albumsData } from "../assets/assets"
+import { useContext, useEffect, useRef } from "react"
+
+import { PlayerContext } from "../context/PlayerContext"
 
 const Display = () => {
+
+  const {albumsData} = useContext(PlayerContext)
 
   const displayRef = useRef()
   const locatinon = useLocation()
   const isAlbum = locatinon.pathname.includes('album')
-  const albumId = isAlbum ? locatinon.pathname.slice(-1) : ""
-  const bgColor = albumsData[Number(albumId)].bgColor
+  const albumId = isAlbum ? locatinon.pathname.split('/').pop() : "" //Changed for fetching from db and backend-->spliting ID
+  const bgColor = isAlbum && albumsData.length > 0 ? albumsData.find((x)=>(x._id == albumId)).bgColor : "#2f2f2f" //Changed for fetching from db and backend
+  // const albumId = isAlbum ? locatinon.pathname.slice(-1) : "" /---For front end ---/
+  //const bgColor = albumsData[Number(albumId)].bgColor
   
   useEffect(()=>{
     if (isAlbum) {
@@ -25,10 +30,15 @@ const Display = () => {
   
   return <>
   <div ref={displayRef}  className="w-[100%] m-5 px-6 pt-4 rounded bg-[#121212] text-white overflow-auto lg:w[75%]  lg:ml-0">
+  {albumsData.length > 0 
+  ? 
   <Routes>
     <Route path="/" element={<DisplayHome/>} />
-    <Route path="/album/:id" element={<DisplayAlbum/>} />
-  </Routes>
+    <Route path="/album/:id" element={<DisplayAlbum album={albumsData.find((x)=>(x._id == albumId))}/>} /> {/*props passing for route id --> fetched from db and backend*/}
+  </Routes> 
+  :null
+   }
+  
   </div>
 
   </>
