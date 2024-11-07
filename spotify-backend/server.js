@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const songRouter = require('./src/routes/songRoute')
 const connectDb = require('./src/config/mongodb')
+const connectCloudinary = require('./src/config/cloudinary')
 require('dotenv').config()
 
 
@@ -11,6 +12,7 @@ require('dotenv').config()
 const app = express()
 const port = process.env.PORT || 3000
 connectDb()
+connectCloudinary()
 
 
 //middlewares
