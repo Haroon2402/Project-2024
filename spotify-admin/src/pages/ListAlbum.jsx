@@ -26,7 +26,7 @@ const ListAlbum = () => {
 
        const removeAlbum = async (id) => {
         try {
-          
+          debugger
           const response = await axios.delete(`${url}/api/album/remove/${id}`)
           
           if (response.data.success) {
