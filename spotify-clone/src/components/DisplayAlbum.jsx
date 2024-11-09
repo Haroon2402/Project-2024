@@ -14,7 +14,7 @@ const DisplayAlbum = ({album}) => {
 
   useEffect(()=>{                     //This mounting has been done after db and backend to check id of db and id of params are same
     albumsData.map((item)=>{     
-      if(item._id === id){
+      if(item._id == id){
         setAlbumData(item)
       }
     })
