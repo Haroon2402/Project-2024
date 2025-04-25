@@ -35,7 +35,7 @@ const addProduct = async (req, res) => {
         console.log(productData)
 
         const product = await productModel.create(productData)
-        res.status(200).send({message:'product added',product})
+        res.status(200).send({success:true,message: 'Product Added',product})
 
         //console.log(name, description, price, category, subCategory, sizes, bestSeller)
          //console.log(imagesUrl) 
@@ -53,7 +53,7 @@ const listProducts = async (req, res) => {
     try {
 
         const products = await productModel.find({})
-        res.status(200).send({products})
+        res.status(200).send({success:true,products})
         
     } catch (error) {
         res.status(404).send({error:error.message})
@@ -67,7 +67,7 @@ const removeProduct = async (req, res) => {
 
         const {id} = req.body
         const removeItem = await productModel.findByIdAndDelete(id)
-        res.status(200).send({removeItem})
+        res.status(200).send({success:true,message:"Product Removed",removeItem})
         
     } catch (error) {
         res.status(404).send({error:error.message})

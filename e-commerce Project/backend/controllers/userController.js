@@ -34,7 +34,7 @@ const loginUser = async (req, res) => {
         }
         
     } catch (error) {
-        res.status(404).send({error:error.message})
+        res.status(404).send(error.message)
     }
 }
 
@@ -69,13 +69,13 @@ const registerUser = async (req, res) => {
         
        
 
-       return res.status(201).send({token,newUser,message:'success'})
+       return res.status(201).send({token,newUser,success:true})
 
         
 
 
     } catch (error) {
-        res.send({error:error.message})
+        res.send(error.message)
     }
 }
 
@@ -86,7 +86,7 @@ const adminLogin = async (req,res) => {
 
         if(email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD){
             const token = jwt.sign(email+password, process.env.JWT_SECRET)
-            res.status(201).send({token})
+            res.status(201).send({success:true,token})
         }
         else{
             res.status(404).send({message:'invalid credentials'})

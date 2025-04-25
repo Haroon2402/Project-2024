@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
-import { assets } from "../assets/assets";
+import {assets} from '../assets/assets'
 import RelatedProducts from "../components/RelatedProducts";
 
 const Product = () => {
@@ -14,6 +14,7 @@ const Product = () => {
   const fetchProductData = async () => {
     products.map((item) => {
       if (item._id === productId) {
+       // console.log(item._id)
         setProductData(item);
         setImage(item.image[0]);
         //console.log(item)
@@ -24,6 +25,7 @@ const Product = () => {
 
   useEffect(() => {
     fetchProductData();
+   
   }, [productId, products]);
 
   return productData ? (
@@ -65,7 +67,7 @@ const Product = () => {
         <div className="flex flex-col gap-4 my-8">
         <p>Select Size</p>
         <div className="flex gap-2">
-        {productData.sizes.map((item,index)=>(
+        {productData.size.map((item,index)=>(
           <button onClick={()=>setSize(item)} className={`border py-2 px-4 bg-gray-100 ${item === size ? 'border-orange-500' : ''}`} key={index}>{item}</button>
         ))}
         </div>
