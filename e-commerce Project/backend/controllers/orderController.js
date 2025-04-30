@@ -105,7 +105,7 @@ const placeOrderStripe = async (req,res) => {
 
     } catch (error) {
         console.log({error})
-        res.status(404).send({error:error})
+        res.status(404).send({message:"please sign in",error:error})
     }
 }
 

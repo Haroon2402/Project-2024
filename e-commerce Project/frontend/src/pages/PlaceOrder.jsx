@@ -32,7 +32,7 @@ const PlaceOrder = () => {
   }
 
   const initPay = (order) =>{
-    debugger
+ 
     const options = {
       key: import.meta.env.VITE_RAZORPAY_KEY_ID,
       amount: order.amount,
@@ -99,6 +99,7 @@ const PlaceOrder = () => {
       break;
 
       case 'stripe':
+       
        const responseStripe  = await axios.post(`${backendUrl}/api/order/stripe`,orderData,{headers:{token}}) 
        console.log(responseStripe)
        if (responseStripe.data.success) {
@@ -111,7 +112,7 @@ const PlaceOrder = () => {
       break;
 
       case 'razorpay':
-        debugger
+        
       const responseRazorpay = await axios.post(`${backendUrl}/api/order/razorpay`,orderData,{headers:{token}})
       if (responseRazorpay.data.success) {
         initPay(responseRazorpay.data.order)
@@ -126,7 +127,8 @@ const PlaceOrder = () => {
 
   } catch (error) {
     console.log({error:error})
-    toast.error(error.message)
+    toast.error(error.response.data.message)
+    navigate('/login')
   }
  }
 
